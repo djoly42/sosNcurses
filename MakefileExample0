@@ -1,0 +1,48 @@
+NAME    = fdf
+FILES    = main.c ft_draw.c ft_hook.c ft_read.c ft_rest.c
+SRCS    = $(addprefix src/, $(FILES))
+OBJS    = $(SRCS:src/%.c=.obj/%.o)
+INC        = -I includes -I libft/includes
+INC2    = -lmlx -framework OpenGL -framework AppKit
+INC3    = -I includes -I ft_printf/
+FLAGS    = -g -Wall -Wextra -Werror
+LIB        = -L libft -lft
+LIB2    = -L ft_printf -lftprintf
+CC        = gcc
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+    @echo "\033[95m _____   _  __ "
+    @echo "\033[95m|  ___|_| |/ _|"
+    @echo "\033[95m| |_ / ​_  | | _​ "
+    @echo "\033[95m|  _| (_| |  _|"
+    @echo "\033[95m|_|  \__,_|_|  "
+    @echo "\033[96m by e:basketball: zdek\033[97m"
+    @echo "\033[91mCompiling :innocent:\033[97m"
+        @make -C libft
+        @make -C ft_printf
+        @$(CC) $(FLAGS) $(SRCS) -o $(NAME) $(INC2) $(INC) $(INC3) $(LIB) $(LIB2)
+        @echo "\033[90mDone :sunglasses:\033[97m"
+.obj/%.o: src/%.c
+    @mkdir -p .obj
+    @$(CC) -c $< -o $@ $(FLAGS) $(INC)
+
+clean:
+    @echo "\033[92mDeleting :skull:\033[97m"
+    @rm -rf .obj
+    @make clean -C libft
+    @make clean -C ft_printf
+    @echo "\033[96mClean done :rage:\033[97m"
+
+fclean: clean
+    @echo "\033[92mDeleting :skull:\033[97m"
+    @make fclean -C libft
+    @make fclean -C ft_printf
+    @rm -f $(NAME)
+    @echo "\033[96mFclean Done :imp:\033[97m"
+
+re: fclean all
+
+
+.PHONY: all clean fclean re
